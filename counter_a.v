@@ -59,10 +59,12 @@ always @(posedge clk, negedge rst) begin
         end
     end
 end
+
 assign trig2 = (q2 == 5 && trig1) ? 1 : 0;
 
-
-// 3. counter (q3): 0~9
+// 3. counter
+// when q4 == 2, 0 ~ 3
+// when q4 == 0 or 1(whenever), 0 ~ 9
 always @(posedge clk, negedge rst) begin
     if(~rst) begin
         q3 <= 0;
@@ -83,6 +85,8 @@ end
 assign trig3 = (q3 == 9 && trig2) ? 1 : 0;
 
 // 4. counter (q4): 0~2
+// when q4 == 9, q4 <= 0
+// when q4 == 2 and q3 == 3, q4 <= 0  
 always @(posedge clk, negedge rst) begin
     if(~rst) begin
         q4 <= 0;
@@ -98,5 +102,6 @@ end
 assign trig4 = (q4 == 2 && q3 == 3 && trig2) ? 1 : 0;
 
 endmodule
+
 
 
