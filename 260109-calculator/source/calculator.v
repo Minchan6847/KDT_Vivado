@@ -35,7 +35,7 @@ always @(*) begin
         SR: n_state = SA;
         SA: n_state = (keypad_pulse[4:0] == 5'h1A || keypad_pulse[4:0] == 5'h1B || keypad_pulse[4:0] == 5'h1C) ? SB : (keypad_pulse[4:0] == 5'h1F ? SR : SA);
         SB: n_state = (keypad_pulse[4:0] == 5'h1D) ? SC : (keypad_pulse[4:0] == 5'h1F ? SR : SB);
-        SC: n_state = (keypad_pulse[4:0] == 5'h1F) ? SR : (keypad_pulse[4:0] == 5'h1F ? SR : SC);
+        SC: n_state = (keypad_pulse[4:0] == 5'h1F) ? SR : SC;
         default:n_state = SR;
     endcase
 end
@@ -52,7 +52,7 @@ end
 
 //----------------- a1, a2, operator -----------------//
 always @(posedge clk or posedge rst) begin
-    if(rst) begin
+    if(rst || c_state == SR) begin
         a1 <= 4'h0;
         a2 <= 4'h0;
         operator <= NONE;
@@ -71,16 +71,11 @@ always @(posedge clk or posedge rst) begin
             endcase
         end
     end
-    else if(c_state == SR) begin
-        a1 <= 4'h0;
-        a2 <= 4'h0;
-        operator <= NONE;
-    end
 end
 
 //----------------- b1, b2 -----------------//
 always @(posedge clk or posedge rst) begin
-    if(rst) begin
+    if(rst || c_state == SR) begin
         b1 <= 4'h0;
         b2 <= 4'h0;
     end
@@ -90,15 +85,11 @@ always @(posedge clk or posedge rst) begin
             b2 <= b1;
         end
     end
-    else if(c_state == SR) begin
-        b1 <= 4'h0;
-        b2 <= 4'h0;
-    end
 end
 
 //----------------- s1, s2 -----------------//
 always @(posedge clk or posedge rst) begin
-    if(rst) begin
+    if(rst || c_state == SR) begin
         s1 <= 4'h0;
         s2 <= 4'h0;
     end
@@ -109,8 +100,14 @@ always @(posedge clk or posedge rst) begin
                 s2 <= ((a2 * 10 + a1) + (b2 * 10 + b1)) / 10;
             end
             MINUS: begin
-                s1 <= ((a2 * 10 + a1) - (b2 * 10 + b1)) % 10;
-                s2 <= ((a2 * 10 + a1) - (b2 * 10 + b1)) / 10;
+                if((a2 * 10 + a1) >= (b2 * 10 + b1)) begin
+                    s1 <= ((a2 * 10 + a1) - (b2 * 10 + b1)) % 10;
+                    s2 <= ((a2 * 10 + a1) - (b2 * 10 + b1)) / 10;
+                end
+                else begin // 음수이면
+                    s1 <= (~ ((a2 * 10 + a1) - (b2 * 10 + b1)) + 1) % 10;
+                    s2 <= (~ ((a2 * 10 + a1) - (b2 * 10 + b1)) + 1) / 10;
+                end
             end
             MULTI: begin
                 s1 <= ((a2 * 10 + a1) * (b2 * 10 + b1)) % 10;
@@ -121,10 +118,6 @@ always @(posedge clk or posedge rst) begin
                 s2 <= 4'h0;
             end
         endcase
-    end
-    else if(c_state == SR) begin
-        s1 <= 4'h0;
-        s2 <= 4'h0;
     end
 end
 
