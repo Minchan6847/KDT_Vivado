@@ -4,7 +4,7 @@
 - FPGA Board: Zybo Z7-20
 - configuration: Vivado 2020.2
 - Used module
-  - 7-Segment LED(x2)
+  - 2 digits 7-Segment LED
   - keypad(0 ~ 9, A ~ F)
   - UART RX/TX module(include USB port)
 
@@ -12,17 +12,17 @@
 ### 2026-01-07 Wed.
 - Digital Watch 1
   - 00:00 ~ 23:59(HH:MM) count up / every second
-  - Use 7-Segment LED(x2)
+  - Only simulation
 
 ### 2026-01-08 Thur.
 - Digital Watch 2
-  - [Function of Digital Watch 1] + [When I press the button, the time increases]
-  - Use 7-Segment LED(x2)
+  - <00 ~ 99 count up / every second> + <Btn[2] -> Pause/Resume, Btn[1:0] -> time increase>
+  - Use 2 digits 7-Segment LED
 
 ### 2026-01-09 Fri.
 - Calculator
   - N @ M = Y (N, M, Y: 0 ~ 99 / @: +, -, *)
-  - Use 7-Segment LED(x2), keypad
+  - Use 2 digits 7-Segment LED, keypad
   - Use ILA(Integrated Logic Analyzer) for debugging
   - Draw Timing Diagram(using WaveDrom)
 
