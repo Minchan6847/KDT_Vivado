@@ -28,7 +28,7 @@ output reg uart_txd;
 
 wire btn_sw_out;
 wire [3:0] dip_sw_out;
-reg en, rst_triger;
+reg en;
 wire trig;
 
 // 125 MHz to 60 MHz
@@ -63,7 +63,7 @@ always @(*) begin
 end
 
 // 0 ~ 520 까지 세는 카운터, cnt == 520일때 trig = 1
-gen_trig #(.SIZE(521)) gen_trig_inst(clk, rst_triger, en, trig);
+gen_trig #(.SIZE(521)) gen_trig_inst(clk, rst, en, trig);
 
 always @(posedge clk or posedge rst) begin
     if(rst || c_state == IDLE) begin
@@ -71,15 +71,6 @@ always @(posedge clk or posedge rst) begin
     end
     else if(c_state == START || D0 || D1 || D2 || D3 || D4 || D5 || D6 || D7 || STOP) begin
         en <= 1;
-    end
-end
-
-always @(posedge clk or posedge rst) begin
-    if(rst || c_state == IDLE) begin
-        rst_triger <= 1;
-    end
-    else begin
-        rst_triger <= 0;
     end
 end
 
