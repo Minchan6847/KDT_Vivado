@@ -12,12 +12,12 @@
 ### 2026-01-07 Wed.
 - Digital Watch 1
   - 00:00 ~ 23:59(HH:MM) count up / every second
-  - use 7-Segment LED(x2)
+  - Use 7-Segment LED(x2)
 
 ### 2026-01-08 Thur.
 - Digital Watch 2
   - [Function of Digital Watch 1] + [When I press the button, the time increases]
-  - use 7-Segment LED(x2)
+  - Use 7-Segment LED(x2)
 
 ### 2026-01-09 Fri.
 - Calculator
