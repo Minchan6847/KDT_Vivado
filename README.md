@@ -33,3 +33,7 @@
 - 2026-01-13 Tue
   - UART
   - use UART RX/TX module
+
+---
+
+- For specific code descriptions, see Notability.
