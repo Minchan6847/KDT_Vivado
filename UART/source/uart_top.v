@@ -20,13 +20,16 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module uart_top(clk_125MHz, rst, btn_sw, dip_sw, uart_txd);
+module uart_top(clk_125MHz, rst, btn_sw, dip_sw, uart_rxd, uart_txd, led);
 
 input clk_125MHz, rst, btn_sw;
 input [3:0] dip_sw;
+input uart_rxd;
 output uart_txd;
+output [3:0] led;
 
 wire btn_sw_out, btn_sw_pulse;
+wire [7:0] uart_rx_data;
 
 // 125 MHz to 60 MHz
 clk_wiz_0 clk_inst (.clk_out1(clk), .reset(rst), .locked(), .clk_in1(clk_125MHz));
@@ -36,5 +39,12 @@ debounce #(.BTN_WIDTH(1)) debounce_inst(clk, rst, btn_sw, btn_sw_out);
 gen_pulse #(.BTN_WIDTH(1)) gen_pulse_inst(clk, rst, btn_sw_out, btn_sw_pulse);
 
 uart_tx uart_tx_inst(clk, rst, btn_sw_pulse, dip_sw, uart_txd);
+uart_rx uart_rx_inst(clk, rst, uart_rxd, uart_rx_data);
+
+assign led = uart_rx_data[3:0];
+
 
 endmodule
+
+
+
