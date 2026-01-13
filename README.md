@@ -24,7 +24,9 @@
 - 2026-01-09 Fri
   - Calculator
   - N @ M = Y (N, M, Y: 0 ~ 99 / @: +, -, *)
-  - use 7-Segment LED(x2), keypad
+  - Use 7-Segment LED(x2), keypad
+  - Use ILA(Integrated Logic Analyzer) for debugging
+  - Draw Timing Diagram(using WaveDrom)
 
 - 2026-01-12 Mon
   - FIR Filter(8-tap)
