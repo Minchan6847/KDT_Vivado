@@ -20,23 +20,14 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 // speed: 115200, data: 8bit, parity: none, stop bit: 1 bit
-module uart_tx(clk_125MHz, rst, btn_sw, dip_sw, uart_txd);
+module uart_tx(clk, rst, btn_sw_pulse, dip_sw, uart_txd);
 
-input clk_125MHz, rst, btn_sw;
+input clk, rst, btn_sw_pulse;
 input [3:0] dip_sw;
 output reg uart_txd;
 
-wire btn_sw_out;
-wire [3:0] dip_sw_out;
 reg en;
 wire trig;
-
-// 125 MHz to 60 MHz
-clk_wiz_0 clk_inst (.clk_out1(clk), .reset(rst), .locked(), .clk_in1(clk_125MHz));
-
-// btn_sw to btn_sw_out(debounced) to btn_sw_pulse
-debounce #(.BTN_WIDTH(1)) debounce_inst(clk, rst, btn_sw, btn_sw_out);
-gen_pulse #(.BTN_WIDTH(1)) gen_pulse_inst(clk, rst, btn_sw_out, btn_sw_pulse);
 
 //====================== FSM ======================//
 
