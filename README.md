@@ -28,10 +28,13 @@
 
 ### 2026-01-12 Mon.
 - FIR Filter(8-tap)
+  - Full Parallel Design
+  - Use Baugh-Wooley Multiplier (WB bit signed)
   - Only simulation
 
 ### 2026-01-13 Tue.
 - UART
+  - Design TX, RX
   - Use UART RX/TX module
 
 ---
