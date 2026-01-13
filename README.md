@@ -23,8 +23,7 @@
 
 - 2026-01-09 Fri
   - Calculator
-  - N @ M = Y (N, M, Y: 0 ~ 99)
-  - @: +, -, *
+  - N @ M = Y (N, M, Y: 0 ~ 99 / @: +, -, *)
   - use 7-Segment LED(x2), keypad
 
 - 2026-01-12 Mon
